@@ -19,7 +19,7 @@ CLIENT_SECRET = "PtX3yVP9oRgJtoj4eSNom2U-faFIBg"
 USER_AGENT = "comic_downloader by u/Darkphoton31"
 
 # --- Configuration ---
-REDDIT_USERNAME = "u/FieldExplores"
+REDDIT_USERNAME = "FieldExplores"
 DOWNLOAD_DIR = "downloaded_images"
 
 # Initialize PRAW
@@ -29,7 +29,7 @@ reddit = praw.Reddit(
     user_agent=USER_AGENT
 )
 
-def image_downloader():
+def image_downloader(redditor):
     # Counter for downloaded files
     post_counter = 0
 
@@ -37,7 +37,7 @@ def image_downloader():
     # limit=None retrieves as many posts as possible (up to 1000 by default)
     
     try:
-        for submission in redditor.submissions.new(limit=10):
+        for submission in redditor.submissions.new(limit=None):
             print(submission.title)
             # Check if the post is an image
             # A submission.url will often end in an image file extension (.jpg, .png, etc.)
@@ -106,6 +106,9 @@ if not os.path.exists(DOWNLOAD_DIR):
     print(f"{bcolors['Ok blue']}Created directory: {DOWNLOAD_DIR}{bcolors['Reset']}")
 
 print(f"{bcolors['info purple']}Starting to download posts from {REDDIT_USERNAME}...{bcolors['Reset']}")
-image_downloader()
+
+# Start the image downloading process
+image_downloader(redditor=redditor)
 
 # Compile the images with fpdf2
+bookmaker()
